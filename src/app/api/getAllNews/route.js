@@ -1,27 +1,39 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
-import { NextResponse } from 'next/server';
+import axios from "axios";
+import cheerio from "cheerio";
+import { NextResponse } from "next/server";
+import { filterShortTitles, filterLongTitles } from "../../helpers/newsFilters";
 
-export async function GET() {
+
+export async function GET(req, res) {
+  const { searchParams } = new URL(req.url);
+  const type = searchParams.get("type");
+
   try {
     const response = await axios.get("https://news.ycombinator.com/");
     const html = response.data;
     const rawDataScraped = cheerio.load(html);
-    console.log('rawDataScraped', rawDataScraped);
+    console.log("rawDataScraped", rawDataScraped);
 
     const articles = [];
 
     rawDataScraped(".athing")
       .slice(0, 30)
       .each((index, element) => {
-        const number = rawDataScraped(element).find(".rank").text().replace(".", "");
+        const number = rawDataScraped(element)
+          .find(".rank")
+          .text()
+          .replace(".", "");
         const title = rawDataScraped(element).find(".titleline > a").text();
         const points = rawDataScraped(element)
           .next()
           .find(".score")
           .text()
           .replace(" points", "");
-        const commentsText = rawDataScraped(element).next().find("a").last().text();
+        const commentsText = rawDataScraped(element)
+          .next()
+          .find("a")
+          .last()
+          .text();
         const comments = commentsText.includes("comment")
           ? commentsText.replace(" comments", "").replace(" comment", "")
           : "0";
@@ -34,7 +46,16 @@ export async function GET() {
         });
       });
 
-    return NextResponse.json({ articles });
+    let filteredEntries = [];
+    if (type === "long-titles") {
+      filteredEntries = filterLongTitles(articles);
+    } else if (type === "short-titles") {
+      filteredEntries = filterShortTitles(articles);
+    } else {
+      filteredEntries = articles;
+    }
+
+    return NextResponse.json({ articles: filteredEntries});
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(

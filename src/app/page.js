@@ -4,43 +4,43 @@ import { useState, useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import styles from "./page.module.css";
 import { Button, message } from "antd";
-import { FileSearchOutlined } from '@ant-design/icons';
-
-
+import { FileSearchOutlined } from "@ant-design/icons";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
   const [buttonLoading, setButtonLoading] = useState(undefined);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/getAllNews");
-        const result = await response.json();
-        console.log(result);
-
-        setIsLoading(false);
-      } catch (err) {
-        //(Needed: Notification error display)
-        messageApi.open({
-          type: "error",
-          content: "There was an error fetching. Please try again!",
-        });
-
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
 
-  const handleButtonClick = (index) => {
+  const fetchData = async (type) => {
+    try {
+      setIsLoading(true);
+
+      const response = await fetch(`/api/getAllNews?type=${type}`);
+      const entries = await response.json();
+      console.log(entries);
+      setIsLoading(false);
+    } catch (err) {
+      //(Needed: Notification error display)3
+      console.log(err)
+      messageApi.open({
+        type: "error",
+        content: "There was an error fetching. Please try again!",
+      });
+
+      setIsLoading(false);
+    }
+  };
+
+  const handleButtonClick = async (index) => {
+    
     setButtonLoading(index);
-    setTimeout(() => {
-      setButtonLoading(undefined);
-    }, 6000);
+    const type = index === 0 ? "short-titles" : "long-titles";
+    await fetchData(type);
+    setButtonLoading(undefined);
+
   };
 
   return (
@@ -62,7 +62,7 @@ export default function Home() {
           className={styles.buttons}
           icon={<FileSearchOutlined />}
           loading={buttonLoading === 0}
-          onClick={()=> handleButtonClick(0)}
+          onClick={() => handleButtonClick(0)}
         >
           Short Title
         </Button>
