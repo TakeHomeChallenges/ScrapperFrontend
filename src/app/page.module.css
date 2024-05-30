@@ -40,10 +40,17 @@
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
-  max-width: 100%;
-  width: var(--max-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100vw;
+}
+
+.buttons {
+  width: 25%;
+  max-width: 290px;
+  height: 50px;
+  font-size: 20px;
 }
 
 .card {
@@ -134,9 +141,13 @@
 
   .grid {
     grid-template-columns: 1fr;
-    margin-bottom: 120px;
-    max-width: 320px;
+    margin-bottom: 30px;
     text-align: center;
+  }
+
+  .buttons {
+    width: 45%;
+    max-width: 290px;
   }
 
   .card {

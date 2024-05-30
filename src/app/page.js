@@ -4,13 +4,15 @@ import { useState, useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import styles from "./page.module.css";
 import { Button, message } from "antd";
+import { FileSearchOutlined } from '@ant-design/icons';
+
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
+  const [buttonLoading, setButtonLoading] = useState(undefined);
 
   useEffect(() => {
-    setIsLoading(true);
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -23,8 +25,8 @@ export default function Home() {
       } catch (err) {
         //(Needed: Notification error display)
         messageApi.open({
-          type: 'error',
-          content: 'There was an error fetching. Please try again!',
+          type: "error",
+          content: "There was an error fetching. Please try again!",
         });
 
         setIsLoading(false);
@@ -34,13 +36,19 @@ export default function Home() {
     fetchData();
   }, []);
 
+  const handleButtonClick = (index) => {
+    setButtonLoading(index);
+    setTimeout(() => {
+      setButtonLoading(undefined);
+    }, 6000);
+  };
+
   return (
     <main className={styles.main}>
       {contextHolder}
       <div className={styles.description}>
         <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
+          <code className={styles.code}>News Scraper</code>
         </p>
       </div>
 
@@ -49,55 +57,24 @@ export default function Home() {
       </div>
 
       <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Button
+          type="primary"
+          className={styles.buttons}
+          icon={<FileSearchOutlined />}
+          loading={buttonLoading === 0}
+          onClick={()=> handleButtonClick(0)}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+          Short Title
+        </Button>
+        <Button
+          className={styles.buttons}
+          type="primary"
+          icon={<FileSearchOutlined />}
+          loading={buttonLoading === 1}
+          onClick={() => handleButtonClick(1)}
         >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+          Long Title
+        </Button>
       </div>
     </main>
   );
