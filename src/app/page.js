@@ -1,12 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import styles from "./page.module.css";
 import { Button } from "antd";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true)
+    const fetchData = async () => {
+
+      try {
+
+        setIsLoading(true)
+
+        const response = await fetch("/api/getAllNews");
+        const result = await response.json();
+        console.log(result)
+
+        setIsLoading(false)
+      }catch(err){
+        //(Needed: Notification error display)
+        setIsLoading(false)
+
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <main className={styles.main}>
@@ -15,15 +38,6 @@ export default function Home() {
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.js</code>
         </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By <Button type="primary">Button</Button>
-          </a>
-        </div>
       </div>
 
       <div className={styles.center}>
