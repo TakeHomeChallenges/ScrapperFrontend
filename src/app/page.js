@@ -3,28 +3,31 @@
 import { useState, useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import styles from "./page.module.css";
-import { Button } from "antd";
+import { Button, message } from "antd";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const fetchData = async () => {
-
       try {
-
-        setIsLoading(true)
+        setIsLoading(true);
 
         const response = await fetch("/api/getAllNews");
         const result = await response.json();
-        console.log(result)
+        console.log(result);
 
-        setIsLoading(false)
-      }catch(err){
+        setIsLoading(false);
+      } catch (err) {
         //(Needed: Notification error display)
-        setIsLoading(false)
+        messageApi.open({
+          type: 'error',
+          content: 'There was an error fetching. Please try again!',
+        });
 
+        setIsLoading(false);
       }
     };
 
@@ -33,6 +36,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      {contextHolder}
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
