@@ -1,7 +1,13 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import LoadingSpinner from "./components/LoadingSpinner";
 import styles from "./page.module.css";
+import { Button } from "antd";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -15,28 +21,13 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
+            By <Button type="primary">Button</Button>
           </a>
         </div>
       </div>
 
       <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+        {isLoading ? <LoadingSpinner /> : null}
       </div>
 
       <div className={styles.grid}>

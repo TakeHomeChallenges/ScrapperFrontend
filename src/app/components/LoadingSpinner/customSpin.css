@@ -1,0 +1,11 @@
+.custom-spin {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-spin .ant-spin-dot {
+    scale: 1.5
+}
