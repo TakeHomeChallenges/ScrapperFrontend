@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
+import NewsCards from "./components/NewsCards";
 import styles from "./page.module.css";
 import { Button, message } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
@@ -35,7 +36,7 @@ export default function Home() {
   };
 
   const handleButtonClick = async (index) => {
-    
+
     setButtonLoading(index);
     const type = index === 0 ? "short-titles" : "long-titles";
     await fetchData(type);
@@ -53,7 +54,7 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        {isLoading ? <LoadingSpinner /> : null}
+        {isLoading ? <LoadingSpinner /> : <NewsCards />}
       </div>
 
       <div className={styles.grid}>
