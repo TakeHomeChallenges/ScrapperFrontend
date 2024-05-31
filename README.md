@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js and React.js Take Home Challenge
+
+## Overview
+
+This project is built using Next.js and React.js, solely utilizing JavaScript. It incorporates the UI library from AntDesign and includes functionality to scrape data from a specific URL. The project is designed to be fully responsive and uses `mockapi.io` as a free API to store log data. The main purpose of this project is to demonstrate how to scrape the latest 30 news articles from a webpage and then apply certain filters based on the content of the titles.
 
 ## Getting Started
 
-First, run the development server:
+To get started with this project, you need to clone the repository, install dependencies, and run the development server. Here are the steps:
 
-```bash
+git clone [https://github.com/TakeHomeChallenges/ScrapperFrontend.git](https://github.com/TakeHomeChallenges/ScrapperFrontend.git)
+
+cd ScrapperFrontend
+
+npm install
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+1. **Web Scraping**: Scrapes the last 30 news articles from [a designated webpage.](https://news.ycombinator.com/)
+2. **Data Filtering**:
+   - **Long Titles**: Filter all previous entries with more than five words in the title ordered by the number of comments first
+   - **Short Titles**: Filter all previous entries with less than or equal to five words in the title ordered by points.
+3. **Responsive Design**: Ensures that the application is usable on a wide range of devices.
+4. **External API Usage**: Utilizes `mockapi.io` to manage and store log data, which simulates database interactions.
 
-To learn more about Next.js, take a look at the following resources:
+## Possible Improvements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Code Improvement**: Convert inline JSX into reusable helper functions to enhance code readability and maintainability.
+- **Backend and Database**:
+  - Upgrade from `mockapi.io` to a more robust SQL or NoSQL database to improve data handling and allow for more than 100 items.
+- **Frontend Requests**:
+  - Transition all frontend requests to use Axios for consistency and to take advantage of its features over the native `fetch` API.
+- **Responsive Design Improvements**: Further refine the responsive aspects of the frontend to ensure better usability across all devices.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
