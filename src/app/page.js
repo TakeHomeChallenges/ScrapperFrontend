@@ -57,7 +57,7 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        {isLoading ? <LoadingSpinner /> : news.length ? <NewsCards news={news} /> : null}
+        {isLoading ? <LoadingSpinner /> : news?.length ? <NewsCards news={news} /> : null}
       </div>
 
       <div className={styles.grid}>

@@ -57,6 +57,18 @@ export async function GET(req, res) {
       filteredEntries = articles;
     }
 
+    //Saving logs in DB (This is just an free API - No production Database)
+    const url = 'https://66595545de346625136c0091.mockapi.io/news/logs/add';
+
+    console.log(type)
+    const logEntry = {
+      createdAt: new Date().toISOString(), // Current timestamp
+      type_filter: type !== "undefined" ? type.toLowerCase() : "all"
+    };
+
+    const APIResponse = await axios.post(url, logEntry);
+    console.log('Successfully posted log entry:', APIResponse.data);
+
     return NextResponse.json({ articles: filteredEntries });
   } catch (error) {
     console.error("Error fetching data:", error);
