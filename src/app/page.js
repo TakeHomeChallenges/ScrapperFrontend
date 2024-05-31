@@ -3,14 +3,16 @@
 import { useState, useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import NewsCards from "./components/NewsCards";
+import LogsModal from "./components/LogsModal";
 import styles from "./page.module.css";
-import { Button, message } from "antd";
+import { Button, message, Modal } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
   const [buttonLoading, setButtonLoading] = useState(undefined);
   const [news, setNews] = useState([]);
+  const [openLogs, setOpenLogs] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -48,7 +50,12 @@ export default function Home() {
   return (
     <main className={styles.main}>
       {contextHolder}
-      <div className={styles.description}>
+      <div
+        className={styles.description}
+        onClick={() => {
+          setOpenLogs(true);
+        }}
+      >
         <p>
           <code className={styles.code}>News Scraper</code>
         </p>
@@ -84,6 +91,7 @@ export default function Home() {
           </Button>
         </div>
       </div>
+      <LogsModal state={openLogs} setOpenLogs={(boolean) => setOpenLogs(boolean)} />
     </main>
   );
 }

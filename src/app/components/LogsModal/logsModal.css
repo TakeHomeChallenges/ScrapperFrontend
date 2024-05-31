@@ -1,0 +1,18 @@
+.modal-buttons {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.modal-buttons-container {
+    text-align: center;
+    color: red;
+}
+
+.loading-spinner-container {
+    display: flex;
+    justify-content: center;
+
+}
