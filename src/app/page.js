@@ -10,6 +10,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
   const [buttonLoading, setButtonLoading] = useState(undefined);
+  const [news, setNews] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -21,7 +22,8 @@ export default function Home() {
 
       const response = await fetch(`/api/getAllNews?type=${type}`);
       const entries = await response.json();
-      console.log(entries);
+
+      setNews(entries.articles)
       setIsLoading(false);
     } catch (err) {
       //(Needed: Notification error display)3
@@ -54,7 +56,7 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        {isLoading ? <LoadingSpinner /> : <NewsCards />}
+        {isLoading ? <LoadingSpinner /> : news.length ? <NewsCards news={news} /> : null}
       </div>
 
       <div className={styles.grid}>

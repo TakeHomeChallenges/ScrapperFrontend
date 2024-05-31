@@ -39,9 +39,19 @@
   transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
   opacity: 0.5; /* Start items at lower opacity */
   transform: scale(0.8); /* Start items at smaller scale */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
 }
 
 .scroll-list__item.visible {
   opacity: 1; /* Fully visible when in focus */
   transform: scale(1); /* Normal scale when in focus */
+}
+
+.cardTitle {
+  color: black;
 }

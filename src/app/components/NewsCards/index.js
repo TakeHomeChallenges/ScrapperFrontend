@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './newsCards.css';  // Assuming you saved the above CSS in ScrollList.css
+import React, { useEffect, useRef, useState } from "react";
+import "./newsCards.css";
+import { Tag } from "antd";
 
-function ScrollList() {
+function ScrollList({ news }) {
   const listRef = useRef(null);
   const [visibleItems, setVisibleItems] = useState(new Set());
 
@@ -16,27 +17,38 @@ function ScrollList() {
         const { top, bottom } = item.getBoundingClientRect();
         const listRect = list.getBoundingClientRect();
         if (top < listRect.bottom && bottom > listRect.top) {
-          visible.add(index); 
+          visible.add(index);
         }
       });
       setVisibleItems(visible);
     };
 
     const list = listRef.current;
-    list.addEventListener('scroll', handleScroll);
-    handleScroll();  // Initial check
+    list.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial check
 
-    return () => list.removeEventListener('scroll', handleScroll);
+    return () => list.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="wrapper">
       <div className="scroll-list">
         <div ref={listRef} className="scroll-list__wrp">
-          {Array.from({ length: 15 }, (_, i) => (
-            <div key={i} className={`scroll-list__item ${visibleItems.has(i) ? 'visible' : ''}`}>
+          {news.map((item, index) => (
+            <div
+              key={index}
+              className={`scroll-list__item ${
+                visibleItems.has(index) ? "visible" : ""
+              }`}
+            >
+              <h2 className="cardTitle">{item.title}</h2>
+              <div>
+                <Tag color="geekblue">Comments: {item.comments}</Tag>
+                <Tag color="purple">Points: {item.points}</Tag>
+              </div>
             </div>
-          ))}
+          ))  }
+          
         </div>
       </div>
     </div>
