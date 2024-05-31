@@ -9,5 +9,6 @@ export const filterShortTitles = (entries) => {
 };
 
 const countWords = (str) => {
-    return str.split(' ').filter(word => word.match(/^[a-zA-Z]+$/)).length;
+    return str.split(/\s+/)  // Split by any whitespace
+              .filter(word => word.match(/^[a-zA-Z]+(?:['-][a-zA-Z]+)*$/)).length;
 };

@@ -23,6 +23,7 @@ export default function Home() {
       const response = await fetch(`/api/getAllNews?type=${type}`);
       const entries = await response.json();
 
+      console.log(entries)
       setNews(entries.articles)
       setIsLoading(false);
     } catch (err) {
