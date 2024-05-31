@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
+import axios from "axios";
 
 import { Modal, List, Progress, Button, Empty } from "antd";
 import "./logsModal.css";
@@ -31,6 +32,20 @@ function LogsModal({ state, setOpenLogs }) {
     }
   };
 
+  const deleteLogs = async () => {
+    try {
+      setLoading(true);
+      console.log(JSON.stringify({ userLogs: userLogs }));
+
+      await fetch("/api/deleteAllLogs");
+
+      fetchLogs();
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -46,7 +61,7 @@ function LogsModal({ state, setOpenLogs }) {
               {userLogs?.length ? (
                 <>
                   <Progress percent={userLogs.length} key="%" />
-                  <Button key="back" onClick={() => setOpenLogs(false)}>
+                  <Button key="back" onClick={() => deleteLogs()}>
                     Clean
                   </Button>
                 </>
@@ -55,7 +70,6 @@ function LogsModal({ state, setOpenLogs }) {
               <Button
                 key="submit"
                 type="primary"
-                loading={loading}
                 onClick={() => setOpenLogs(false)}
               >
                 Done
