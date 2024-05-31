@@ -3,7 +3,6 @@ import cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import { filterShortTitles, filterLongTitles } from "../../helpers/newsFilters";
 
-
 export async function GET(req, res) {
   const { searchParams } = new URL(req.url);
   const type = searchParams.get("type");
@@ -23,7 +22,9 @@ export async function GET(req, res) {
           .find(".rank")
           .text()
           .replace(".", "");
-        const title = rawDataScraped(element).find(".titleline > a").text();
+        const titleElement = rawDataScraped(element).find(".titleline > a");
+        const title = titleElement.text();
+        const url = titleElement.attr("href");
         const points = rawDataScraped(element)
           .next()
           .find(".score")
@@ -41,6 +42,7 @@ export async function GET(req, res) {
         articles.push({
           number: parseInt(number, 10),
           title,
+          url,
           points: parseInt(points, 10) || 0,
           comments: parseInt(comments, 10) || 0,
         });
@@ -55,7 +57,7 @@ export async function GET(req, res) {
       filteredEntries = articles;
     }
 
-    return NextResponse.json({ articles: filteredEntries});
+    return NextResponse.json({ articles: filteredEntries });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(

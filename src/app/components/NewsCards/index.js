@@ -40,6 +40,9 @@ function ScrollList({ news }) {
               className={`scroll-list__item ${
                 visibleItems.has(index) ? "visible" : ""
               }`}
+              onClick={()=>{
+                window.open(item.url, '_blank');
+              }}
             >
               <h2 className="cardTitle">{item.title}</h2>
               <div>
