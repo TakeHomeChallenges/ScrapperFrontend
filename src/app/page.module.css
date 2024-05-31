@@ -133,8 +133,29 @@
   }
 }
 
+.divContainer {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 /* Mobile */
 @media (max-width: 700px) {
+
+  .main {
+    padding: 0;
+    min-height: 0;
+    margin-top: 140px;
+  }
+  
+  .divContainer {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   .content {
     padding: 4rem;
   }
@@ -159,7 +180,7 @@
   }
 
   .center {
-    padding: 8rem 0 6rem;
+    padding: 0;
   }
 
   .center::before {
