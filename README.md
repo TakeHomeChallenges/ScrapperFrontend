@@ -37,6 +37,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
   - Transition all frontend requests to use Axios for consistency and to take advantage of its features over the native `fetch` API.
 - **Responsive Design Improvements**: Further refine the responsive aspects of the frontend to ensure better usability across all devices.
 
+## How to use the log feature
+
+- **Click on the News Scraper text**: To see the logs please click on the 'News Scraper Text' button.
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
